@@ -1,5 +1,6 @@
 package com.afrinaldi.conea.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ArticlesItem(
