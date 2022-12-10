@@ -2,10 +2,10 @@ package com.afrinaldi.conea.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.afrinaldi.conea.data.repository.NewsRepository
+import com.afrinaldi.conea.data.HeroesRepository
 import com.afrinaldi.conea.ui.screen.home.HomeViewModel
 
-class ViewModelFactory(private val repository: NewsRepository) :
+class ViewModelFactory(private val repository: HeroesRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")

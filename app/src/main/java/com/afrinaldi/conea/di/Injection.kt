@@ -1,11 +1,9 @@
 package com.afrinaldi.conea.di
 
-import com.afrinaldi.conea.data.network.ApiConfig
-import com.afrinaldi.conea.data.repository.NewsRepository
+import com.afrinaldi.conea.data.HeroesRepository
 
 object Injection {
-    fun provideRepository(): NewsRepository {
-        val apiService = ApiConfig.getApiService()
-        return NewsRepository.getInstance(apiService)
+    fun provideRepository(): HeroesRepository {
+        return HeroesRepository.getInstance()
     }
 }
