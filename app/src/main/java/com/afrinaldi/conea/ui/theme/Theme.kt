@@ -5,17 +5,21 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    surface = SmoothDark
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = PrimaryDark,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    surface = LightWhite
 
     /* Other default colors to override
     background = Color.White,
@@ -33,6 +37,17 @@ fun ConeaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
         DarkColorPalette
     } else {
         LightColorPalette
+    }
+
+    val systemUiController = rememberSystemUiController()
+    if(darkTheme){
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent
+        )
+    }else{
+        systemUiController.setSystemBarsColor(
+            color = PrimaryDark
+        )
     }
 
     MaterialTheme(

@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Conea</string>
     <string name="home">Home</string>
-    <string name="profile">Profile</string>
+    <string name="about">About</string>
+    <string name="search">Search</string>
+    <string name="see_detail">Lihat detail</string>
+    <string name="search_hero">Cari nama pahlawan</string>
+    <string name="my_name">Afrinaldi</string>
+    <string name="my_email">afrinaldi.genz0@gmail.com</string>
+    <string name="quotes">Jangan lupakan sejarah</string>
 </resources>

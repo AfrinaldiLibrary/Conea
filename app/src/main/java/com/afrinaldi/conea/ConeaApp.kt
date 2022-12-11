@@ -11,12 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.afrinaldi.conea.ui.navigation.NavigationItem
 import com.afrinaldi.conea.ui.navigation.Screen
+import com.afrinaldi.conea.ui.screen.about.AboutScreen
+import com.afrinaldi.conea.ui.screen.detail.DetailScreen
 import com.afrinaldi.conea.ui.screen.home.HomeScreen
 
 @Composable
@@ -24,22 +28,38 @@ fun ConeaApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentRoute != Screen.Detail.route) {
+                BottomBar(navController)
+            }
         },
         modifier = modifier
-    ) {
+    ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen()
+            composable(route = Screen.Home.route) {
+                HomeScreen(navigateToDetail = { name ->
+                    navController.navigate(Screen.Detail.createRouteToDetail(name))
+                })
             }
-            composable(Screen.Profile.route) {
-
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("name") {
+                    type = NavType.StringType
+                }),
+            ) {
+                val name = it.arguments?.getString("name")
+                DetailScreen(name = name!!)
+            }
+            composable(route = Screen.About.route) {
+                AboutScreen()
             }
         }
     }
@@ -60,9 +80,9 @@ private fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = stringResource(id = R.string.profile),
+                title = stringResource(id = R.string.about),
                 icon = Icons.Default.AccountCircle,
-                screen = Screen.Profile
+                screen = Screen.About
             ),
         )
         BottomNavigation {
@@ -74,8 +94,8 @@ private fun BottomBar(
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
-                            restoreState = true
                             launchSingleTop = true
+                            restoreState = true
                         }
                     },
                     icon = {

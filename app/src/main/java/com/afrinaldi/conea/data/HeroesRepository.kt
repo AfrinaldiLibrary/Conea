@@ -18,6 +18,18 @@ class HeroesRepository {
         return flowOf(heroes)
     }
 
+    fun getSelectedHero(name: String): Heroes {
+        return heroes.first {
+            it.name == name
+        }
+    }
+
+    fun searchHeroes(query: String): Flow<List<Heroes>> {
+        return flowOf(heroes.filter {
+            it.name!!.contains(query, ignoreCase = true)
+        })
+    }
+
     companion object {
         @Volatile
         private var instance: HeroesRepository? = null

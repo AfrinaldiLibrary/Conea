@@ -1,4 +1,4 @@
-package com.afrinaldi.conea.ui
+package com.afrinaldi.conea.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -7,16 +7,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.afrinaldi.conea.R
 import com.afrinaldi.conea.ui.theme.ConeaTheme
 import com.afrinaldi.conea.ui.theme.Shapes
@@ -32,7 +30,7 @@ fun CardItem(
     ) {
         Image(
             painter = painterResource(image),
-            contentDescription = null,
+            contentDescription = name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .padding(8.dp)
@@ -50,9 +48,9 @@ fun CardItem(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
         Text(
-            text = "Lihat detail",
+            text = stringResource(id = R.string.see_detail),
             style = MaterialTheme.typography.caption,
-            color = Color.LightGray,
+            color = Color.Gray,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
         )
     }
