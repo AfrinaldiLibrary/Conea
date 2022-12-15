@@ -6,4 +6,5 @@ sealed class Screen(val route: String){
         fun createRouteToDetail (name : String) = "home/$name"
     }
     object About: Screen("about_page")
+    object Favorites: Screen("favorites")
 }

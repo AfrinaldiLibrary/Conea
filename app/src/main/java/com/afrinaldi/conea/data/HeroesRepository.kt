@@ -4,6 +4,7 @@ import com.afrinaldi.conea.model.Heroes
 import com.afrinaldi.conea.model.HeroesDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class HeroesRepository {
     private val heroes = mutableListOf<Heroes>()
@@ -28,6 +29,27 @@ class HeroesRepository {
         return flowOf(heroes.filter {
             it.name!!.contains(query, ignoreCase = true)
         })
+    }
+
+    fun getFavorite(): Flow<List<Heroes>> {
+        return getAllHeroes()
+            .map { heroes ->
+                heroes.filter {
+                    it.isFavorite
+                }
+            }
+    }
+
+    fun updateStatusFavorite(name: String, isFavorite: Boolean) : Flow<Boolean>{
+        val index = heroes.indexOfFirst { it.name == name }
+        val result = if (index >= 0) {
+            val hero = heroes[index]
+            heroes[index] = hero.copy(name = name, isFavorite = isFavorite)
+            true
+        } else {
+            false
+        }
+        return flowOf(result)
     }
 
     companion object {

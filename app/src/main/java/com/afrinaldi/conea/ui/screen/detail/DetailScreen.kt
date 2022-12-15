@@ -3,8 +3,8 @@ package com.afrinaldi.conea.ui.screen.detail
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.afrinaldi.conea.di.Injection
 import com.afrinaldi.conea.ui.ViewModelFactory
@@ -31,6 +31,10 @@ fun DetailScreen(
                         image = selected.image!!,
                         name = selected.name!!,
                         detail = selected.detail!!,
+                        isFavorite = selected.isFavorite,
+                        changeStatusFavorite = { status ->
+                            viewModel.changeStatusFavorite(selected, status)
+                        }
                     )
                 }
                 is UiState.Error -> {}
@@ -43,12 +47,20 @@ fun DetailContent(
     image: Int,
     name: String,
     detail: String,
+    isFavorite: Boolean,
+    changeStatusFavorite: (status: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var isFavorites by rememberSaveable{
+        mutableStateOf(isFavorite)
+    }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        DetailItem(image = image, name = name, detail = detail)
+        DetailItem(image = image, name = name, detail = detail, favoriteStatus = isFavorites, updateFavoriteStatus = {
+            isFavorites = !isFavorites
+            changeStatusFavorite(isFavorites)
+        })
     }
 }

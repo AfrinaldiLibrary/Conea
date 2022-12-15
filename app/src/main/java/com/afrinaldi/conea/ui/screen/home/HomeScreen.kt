@@ -1,5 +1,7 @@
 package com.afrinaldi.conea.ui.screen.home
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,6 +50,7 @@ fun HomeScreen(
         }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(
     heroesData: List<Heroes>,
@@ -56,7 +59,7 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     navigateToDetail: (String) -> Unit,
 ) {
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         item {
             SearchBar(query = query, onQueryChange = onQueryChange)
         }
@@ -68,6 +71,7 @@ fun HomeContent(
                     .clickable {
                         navigateToDetail(it.name!!)
                     }
+                    .animateItemPlacement(tween(durationMillis = 300))
             )
         }
     }

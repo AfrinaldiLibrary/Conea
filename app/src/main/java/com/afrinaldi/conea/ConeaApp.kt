@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import com.afrinaldi.conea.ui.navigation.NavigationItem
 import com.afrinaldi.conea.ui.navigation.Screen
 import com.afrinaldi.conea.ui.screen.about.AboutScreen
 import com.afrinaldi.conea.ui.screen.detail.DetailScreen
+import com.afrinaldi.conea.ui.screen.favorite.FavoriteScreen
 import com.afrinaldi.conea.ui.screen.home.HomeScreen
 
 @Composable
@@ -58,6 +60,13 @@ fun ConeaApp(
                 val name = it.arguments?.getString("name")
                 DetailScreen(name = name!!)
             }
+            composable(
+                route = Screen.Favorites.route
+            ) {
+                FavoriteScreen(navigateToDetail = {name ->
+                    navController.navigate(Screen.Detail.createRouteToDetail(name))
+                })
+            }
             composable(route = Screen.About.route) {
                 AboutScreen()
             }
@@ -78,6 +87,11 @@ private fun BottomBar(
                 title = stringResource(id = R.string.home),
                 icon = Icons.Default.Home,
                 screen = Screen.Home
+            ),
+            NavigationItem(
+                title = stringResource(id = R.string.favorites),
+                icon = Icons.Default.Favorite,
+                screen = Screen.Favorites
             ),
             NavigationItem(
                 title = stringResource(id = R.string.about),

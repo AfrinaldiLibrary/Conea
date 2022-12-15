@@ -7,6 +7,7 @@ import com.afrinaldi.conea.model.Heroes
 import com.afrinaldi.conea.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.switchMap
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: HeroesRepository) : ViewModel() {
@@ -17,6 +18,12 @@ class DetailViewModel(private val repository: HeroesRepository) : ViewModel() {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             _uiState.value = UiState.Success(repository.getSelectedHero(name))
+        }
+    }
+
+    fun changeStatusFavorite(heroes : Heroes, isFavorites: Boolean) {
+        viewModelScope.launch {
+            repository.updateStatusFavorite(heroes.name!!, isFavorites)
         }
     }
 }
